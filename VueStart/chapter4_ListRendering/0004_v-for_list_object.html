@@ -8,9 +8,7 @@
         <h1>Let's hear some stories!</h1>
         <div>
           <ul class="list-group">
-              <li v-for="(story, index) in stories"
-                  class="list-group-item"
-                  >
+              <li v-for="(story, index) in stories" class="list-group-item">
                   {{index}} {{ story.writer }} said "{{ story.plot }}"
               </li>
           </ul>
