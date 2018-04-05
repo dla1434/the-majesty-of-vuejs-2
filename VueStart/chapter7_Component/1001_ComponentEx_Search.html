@@ -1,0 +1,91 @@
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Awesome Stories</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Lets hear some stories!</h1>
+    <div>
+        <h3>Alex's stories</h3>
+        <ul class="list-group">
+          <story v-for="story in storiesBy('Alex')" :story="story"></story>
+        </ul>
+
+        <h3>John's stories</h3>
+        <ul class="list-group">
+            <story v-for="story in storiesBy('John')" :story="story"></story>
+        </ul>
+
+        <div class="form-group">
+          <h4>
+            참고)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;labe for속성을 사용하여 input이 연결하려고 한 거 같은데..input에 id가 정의되지 않아서
+            제대로 실행되고 있지 않았다.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;id를 추가해서 라벨 클릭 시에 input도 포커싱되게 수정했다.
+          </h4>
+          <label for="query">What are you looking for?</label>
+          <input id="query" v-model="query" class="form-control">
+        </div>
+        <h3>Search results:</h3>
+        <ul class="list-group">
+            <story v-for="story in search" :story="story"></story>
+        </ul>
+    </div>
+  </div>
+  <template id="story-template">
+    <li class="list-group-item">
+      {{ story.writer }} said "{{ story.body }}"
+    </li>
+  </template>
+</body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+Vue.component('story', {
+    props: ['story'],
+    template: '#story-template'
+});
+
+new Vue({
+  el: '.container',
+  data: {
+    stories: [
+      {
+        body: "I crashed my car today!",
+        writer: "Alex"
+      },
+      {
+        body: "Yesterday, someone stole my bag!",
+        writer: "John"
+      },
+      {
+        body: "Someone ate my chocolate...",
+        writer: "John"
+      },
+      {
+        body: "I ate someone's chocolate!",
+        writer: "Alex"
+      },
+    ],
+    query: ' '
+  },
+  methods:{
+    storiesBy: function (writer) {
+      return this.stories.filter(function (story) {
+        return story.writer === writer
+      })
+    }
+  },
+  computed: {
+    search: function () {
+      var query = this.query
+      return this.stories.filter(function (story) {
+        return story.body.includes(query)
+      })
+    }
+  }
+})
+</script>
+</html>
