@@ -53,6 +53,7 @@ Vue.component('food', {
       bus.$emit('voted', food)
     },
     reset: function () {
+      console.log('food component reset');
       this.votes = 0
     }
   },
